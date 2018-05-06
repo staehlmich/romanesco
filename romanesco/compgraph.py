@@ -19,8 +19,9 @@ def define_computation_graph(vocab_size: int, batch_size: int):
         input_embeddings = tf.nn.embedding_lookup(embedding, inputs)
 
     with tf.name_scope('RNN'):
-        cell = tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE, state_is_tuple=True)
-        initial_state = cell.zero_state(batch_size, tf.float32)
+       # cell = tf.nn.rnn_cell.BasicLSTMCell(HIDDEN_SIZE, state_is_tuple=True)
+        cell= tf.nn.rnn_cell.GRUCell(HIDDEN_SIZE)
+	initial_state = cell.zero_state(batch_size, tf.float32)
         rnn_outputs, rnn_states = tf.nn.dynamic_rnn(cell, input_embeddings, initial_state=initial_state)
 
     with tf.name_scope('Final_Projection'):
